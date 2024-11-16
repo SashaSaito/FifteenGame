@@ -45,10 +45,8 @@ Project for practice on the course Algorithms and Data Structures.
 - Реалізація інтерфейсу `Output`.
 - Виводить ігрове поле в консоль.
 
-![image](https://github.com/user-attachments/assets/58cf78e4-a57c-47b8-9625-93b2caf5e340)
-
-
 #### `FifteenGameApp`
 - Основний клас програми.
 - Запускає гру та організовує взаємодію між компонентами.
 
+![image](https://github.com/user-attachments/assets/58cf78e4-a57c-47b8-9625-93b2caf5e340)
