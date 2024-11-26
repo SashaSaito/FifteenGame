@@ -1,6 +1,6 @@
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
 
 public class FifteenGame implements Game {
     private int[][] board;
@@ -32,13 +32,58 @@ public class FifteenGame implements Game {
         }
         tiles.add(0);
 
-        Collections.shuffle(tiles);
+        do {
+            Collections.shuffle(tiles);
+        } while (!isSolvable(tiles, getGoalState(), 4));
 
         int index = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 board[i][j] = tiles.get(index++);
             }
+        }
+    }
+
+    private List<Integer> getGoalState() {
+        List<Integer> goal = new ArrayList<>();
+        for (int i = 1; i <= 15; i++) {
+            goal.add(i);
+        }
+        goal.add(0);
+        return goal;
+    }
+
+    private int inversions(List<Integer> list) {
+        int inversions = 0;
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            int n = list.get(i);
+            if (n <= 1) {
+                continue;
+            }
+            for (int j = i + 1; j < size; j++) {
+                int m = list.get(j);
+                if (m > 0 && n > m) {
+                    inversions++;
+                }
+            }
+        }
+        return inversions;
+    }
+
+    private boolean isSolvable(List<Integer> start, List<Integer> goal, int width) {
+        int startInversions = inversions(start);
+        int goalInversions = inversions(goal);
+        if (width % 2 == 0) {
+            int goalZeroRow = goal.indexOf(0) / width;
+            int startZeroRow = start.indexOf(0) / width;
+            if (goalInversions % 2 == 0) {
+                return startInversions % 2 == (goalZeroRow + startZeroRow) % 2;
+            } else {
+                return startInversions % 2 != (goalZeroRow + startZeroRow) % 2;
+            }
+        } else {
+            return startInversions % 2 == goalInversions % 2;
         }
     }
 
